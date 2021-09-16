@@ -1,13 +1,15 @@
+<?php require_once('../private/initialize.php'); ?>
+
 <?php
-	$output = '';
 	if(!isset($_GET['code']) OR !isset($_GET['user'])){
-		$output .= '
+		$_SESSION['error'] = '
 			<div class="alert alert-danger">
                 <h4><i class="icon fa fa-warning"></i> Error!</h4>
                 Code to activate account not found.
             </div>
             <h4>You may <a href="signup.php">Signup</a> or back to <a href="index.php">Homepage</a>.</h4>
 		'; 
+		redirect_to(url_for('/error.php'));
 	}
 	else{
 		$conn = $pdo->open();
@@ -18,47 +20,47 @@
 
 		if($row['numrows'] > 0){
 			if($row['status']){
-				$output .= '
+				$_SESSION['error'] = '
 					<div class="alert alert-danger">
 		                <h4><i class="icon fa fa-warning"></i> Error!</h4>
 		                Account already activated.
 		            </div>
 		            <h4>You may <a href="login.php">Login</a> or back to <a href="index.php">Homepage</a>.</h4>
 				';
+
+				redirect_to(url_for('/error.php'));
 			}
 			else{
 				try{
 					$stmt = $conn->prepare("UPDATE users SET status=:status WHERE id=:id");
 					$stmt->execute(['status'=>1, 'id'=>$row['id']]);
-					$output .= '
-						<div class="alert alert-success">
-			                <h4><i class="icon fa fa-check"></i> Success!</h4>
-			                Account activated - Email: <b>'.$row['email'].'</b>.
-			            </div>
-			            <h4>You may <a href="login.php">Login</a> or back to <a href="index.php">Homepage</a>.</h4>
-					';
+					redirect_to(url_for('/'));
 				}
 				catch(PDOException $e){
-					$output .= '
+					$_SESSION['error'] = '
 						<div class="alert alert-danger">
 			                <h4><i class="icon fa fa-warning"></i> Error!</h4>
 			                '.$e->getMessage().'
 			            </div>
 			            <h4>You may <a href="signup.php">Signup</a> or back to <a href="index.php">Homepage</a>.</h4>
 					';
+
+					redirect_to(url_for('/error.php'));
 				}
 
 			}
 			
 		}
 		else{
-			$output .= '
+			$_SESSION['error'] = '
 				<div class="alert alert-danger">
 	                <h4><i class="icon fa fa-warning"></i> Error!</h4>
 	                Cannot activate account. Wrong code.
 	            </div>
 	            <h4>You may <a href="signup.php">Signup</a> or back to <a href="index.php">Homepage</a>.</h4>
 			';
+
+			redirect_to(url_for('/error.php'));
 		}
 
 		$pdo->close();

@@ -79,7 +79,7 @@
                             <p>Email: ". $email . "</p>
                             <p>Password: ".$_POST['password']."</p>
                             <p>Please click the link below to activate your account.</p>
-                            <a href='http://localhost/uniseverything/activate.php?code=".$activate_code."&user=".$userid."'>Activate Account</a>
+                            <a href='http://localhost/uniseverything/public/activate.php?code=".$activate_code."&user=".$userid."'>Activate Account</a>
                         ";
 
                         mail_send();
