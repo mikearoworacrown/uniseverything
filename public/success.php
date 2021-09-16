@@ -6,6 +6,7 @@
 <?php 
     include(SHARED_PATH . '/public_header.php');
 ?>
+
 <style>
 div.success-div {
     height: 600px;
