@@ -1,4 +1,9 @@
 <?php require_once('../private/initialize.php'); ?>
+<?php
+  if(isset($_SESSION['user'])){
+    redirect_to(url_for('/'));
+  }
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,21 +19,41 @@
 	</style>
 </head>
 <body style="background-color: #1f2226;">
+
+?>
 <div class="login-container">
 		<div class="sign-up-container">
 			<div class="login-signup">
 				Not a member? <a href="<?php echo url_for('/signup.php')?>" style="color: #cf2d42;"> Sign up</a>
 			</div>
+			
 			<div class="signup-align" style="clear: right;">
-				<form name="login" action="" method="post"
-					onsubmit="return loginValidation()">
+				<form name="login" action="../private/verify.php" method="post">
 					
 					<div class="signup-heading" style="color: #cf2d42;">Uniseverything</div>
 					<div style="text-align: center; margin-top: 15px; font-weight: bold; font-size: 1.25em;">Login</div>
-				<?php if(!empty($loginResult)){?>
-				<div class="error-msg"><?php echo $loginResult;?></div>
-				<?php }?>
-				<div class="row">
+			
+					<div class="error-msg">
+						<?php
+							if(isset($_SESSION['error'])){
+								echo "
+								<div class='callout callout-danger text-center'>
+									<p>".$_SESSION['error']."</p> 
+								</div>
+								";
+								unset($_SESSION['error']);
+							}
+							if(isset($_SESSION['success'])){
+								echo "
+								<div class='callout callout-success text-center'>
+									<p>".$_SESSION['success']."</p> 
+								</div>
+								";
+								unset($_SESSION['success']);
+							}
+						?>
+					</div>
+					<div class="row">
 						<div class="inline-block">
 							<div class="form-label">
 								Username<span class="required error" id="username-info"></span>
@@ -56,32 +81,7 @@
 	</div>
 	<script src="<?php echo url_for('/js/jquery.slim.min.js')?>"></script>
 	<script>
-		function loginValidation() {
-			var valid = true;
-			$("#username").removeClass("error-field");
-			$("#password").removeClass("error-field");
 
-			var UserName = $("#username").val();
-			var Password = $('#login-password').val();
-
-			$("#username-info").html("").hide();
-
-			if (UserName.trim() == "") {
-				$("#username-info").html("required.").css("color", "#ee0000").show();
-				$("#username").addClass("error-field");
-				valid = false;
-			}
-			if (Password.trim() == "") {
-				$("#login-password-info").html("required.").css("color", "#ee0000").show();
-				$("#login-password").addClass("error-field");
-				valid = false;
-			}
-			if (valid == false) {
-				$('.error-field').first().focus();
-				valid = false;
-			}
-			return valid;
-		}
 	</script>
 </body>
 </html>
