@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/bootstrap.css'); ?>" />
-    <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/public.css?version=6'); ?>" />
-    <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/public_responsive.css?version=10'); ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/public.css?version=9'); ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/public_responsive.css?version=6'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/fontawesome/css/all.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/OwlCarousel/owl.carousel.css'); ?>" />
     <title>Uniseverything <?php if(isset($page_title)) { echo '- ' . h($page_title); } ?></title>
@@ -39,7 +39,7 @@
             aria-haspopup="true" aria-expanded="false"
             href="#">Categories</a>
 
-            <div class="dropdown-menu dropdown-list" aria-labelledby="servicesDropdown">
+            <div class="dropdown-menu dropdown-list" style="width: 300px;" aria-labelledby="servicesDropdown">
               <?php
                 $conn = $pdo->open();
                 try{
@@ -67,7 +67,7 @@
       </form>
       <?php 
         if(isset($_SESSION['user'])){
-          $image = (!empty($user['photo'])) ? '/images/users/'.$user['photo'] : '/images/users/profile.jpg';
+          $image = (!empty($user['photo'])) ? url_for('/images/users/') .$user['photo'] : url_for('/images/users/profile.jpg');
           
           echo'
               <ul class="navbar-nav navbar-list">
@@ -77,28 +77,31 @@
                       data-toggle="dropdown" id="servicesDropdown"
                       aria-haspopup="true" aria-expanded="false"
                       href="#">
-                        <img src="'.$image.'" class="user-image" alt="User Image">
-                        <span class="hidden-xs">'.$user['firstname'].' '.$user['lastname'].'</span>
+                        <span class="hidden-xs">' . $user['fullname'] .'</span>
                     </a>
 
-                    <div class="dropdown-menu dropdown-menu-right dropdown-list" aria-labelledby="servicesDropdown">
-                      <!-- User image -->
-                      <li class="user-header">
-                        <img src="'.$image.'" class="img-circle" alt="User Image">
-
-                        <p>
-                          '.$user['firstname'].' '.$user['lastname'].'
-                          <small>Member since '.date('M. Y', strtotime($user['created_on'])).'</small>
-                        </p>
-                      </li>
-                      <li class="user-footer">
-                        <div class="pull-left">
-                          <a href="profile.php" class="btn btn-default btn-flat">Profile</a>
-                        </div>
-                        <div class="pull-right">
-                          <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
-                        </div>
-                      </li>
+                    <div class="dropdown-menu dropdown-menu-right dropdown-list" style="width: 300px;" aria-labelledby="servicesDropdown">
+                      <ul>
+                        <!-- User image -->
+                        <li class="user-header">
+                          <div class="text-center">
+                            <img src="'.$image.'" class="img-circle" alt="User Image">
+                          </div>
+                          <div class="text-center">
+                            <h4 class="username"> '. $user['fullname'] .'</h4>
+                            <p>Member since '.date('M. Y', strtotime($user['created_on'])).'</p>
+                          </div>
+                        </li>
+                        <li class="user-footer">
+                          <div class="pull-left">
+                            <a href="profile.php" class="btn btn-default btn-flat">Profile</a>
+                          </div>
+                          <div class="pull-right">
+                            <a href="logout.php" class="btn btn-default btn-flat">Sign out</a>
+                          </div>
+                          <p style="clear: both;"></p>
+                        </li>
+                      </ul> 
                     </div> 
                   </div>
                 </li>

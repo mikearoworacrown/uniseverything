@@ -3,7 +3,10 @@
   if(isset($_SESSION['user'])){
     redirect_to(url_for('/'));
   }
+
+  echo $_SESSION['email'];
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,20 +35,20 @@
 					
 					<div class="signup-heading" style="color: #cf2d42;">Uniseverything</div>
 					<div style="text-align: center; margin-top: 15px; font-weight: bold; font-size: 1.25em;">Login</div>
-			
-					<div class="error-msg">
+					<div class="error-msg" id="error-msg">
 						<?php
 							if(isset($_SESSION['error'])){
 								echo "
-								<div class='callout callout-danger text-center'>
-									<p>".$_SESSION['error']."</p> 
+								<div>
+									<p style='color: #cf2d42;'>".$_SESSION['error']."</p> 
 								</div>
 								";
 								unset($_SESSION['error']);
 							}
+
 							if(isset($_SESSION['success'])){
 								echo "
-								<div class='callout callout-success text-center'>
+								<div>
 									<p>".$_SESSION['success']."</p> 
 								</div>
 								";
@@ -56,24 +59,27 @@
 					<div class="row">
 						<div class="inline-block">
 							<div class="form-label">
-								Username<span class="required error" id="username-info"></span>
+								Email Address:<span class="required error" id="username-info"></span>
 							</div>
-							<input class="input-box-330" type="text" name="username"
-								id="username">
+							<input class="input-box-330" type="text" name="email"
+								id="email">
 						</div>
 					</div>
 					<div class="row">
 						<div class="inline-block">
 							<div class="form-label">
-								Password<span class="required error" id="login-password-info"></span>
+								Password:<span class="required error" id="login-password-info"></span>
 							</div>
 							<input class="input-box-330" type="password"
-								name="login-password" id="login-password">
+								name="password" id="password">
 						</div>
 					</div>
 					<div class="row">
 						<input class="btn" type="submit" name="login-btn"
 							id="login-btn" value="Login">
+					</div>
+					<div class="row">
+						<a href="<?php echo url_for('/signup.php')?>" style="color: #cf2d42;"> Forgot Password? </a>
 					</div>
 				</form>
 			</div>

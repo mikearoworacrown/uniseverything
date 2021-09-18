@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS `users` (
     `fullname` varchar(200) NOT NULL,
     `password` varchar(60) NOT NULL,
     `phone` varchar(100) NOT NULL,
-    `type` int(1) NOT NULL DEFAULT 1,
+    `type` int(1) NOT NULL DEFAULT 0,
     `address` text,
     `photo` varchar(200),
     `status` int(1) NOT NULL DEFAULT 0,
