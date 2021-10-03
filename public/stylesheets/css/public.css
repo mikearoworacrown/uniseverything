@@ -100,13 +100,13 @@ h1,h2,h3,h4,h5,h6{
 
 
 /***************************************************** header ***********************************************/
-div.logo-container {
+div.brand-logo-container {
     border: 2px solid transparent;
   }
-  div.logo-container:hover {
+  div.brand-logo-container:hover {
     border: 2px solid #cf2d42;
   }
-  a.logo:after {
+  a.brand-logo:after {
     content: "Uniseverything";
     font: 100% Lato, Helvetica, sans-serif;
     font-weight: bold;
@@ -1026,13 +1026,16 @@ input.btn {
 }
 .callout.callout-danger {
  border-color: #c23321;
+ background-color: #cf2d42;
 }
 .callout.callout-warning {
  border-color: #c87f0a;
+
 }
 .callout.callout-info {
  border-color: #0097bc;
 }
 .callout.callout-success {
  border-color: #00733e;
+ background-color: #00733e;
 }

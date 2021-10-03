@@ -9,8 +9,9 @@ jQuery(document).ready(function($){
     initSlider3();
     initSlider4();
     initSlider5();
+    initQuantity();
+    initFavs();
 
-    signupValidation();
 
 
     function initIsotopeFiltering(){
@@ -57,7 +58,18 @@ jQuery(document).ready(function($){
             });
         }
     }
-});
+
+
+    function initFavs()
+	{
+		// Handle Favorites
+		var fav = $('.product_fav');
+		fav.on('click', function()
+		{
+			fav.toggleClass('active');
+		});
+	}
+
 
 
 /****************************Init Slider(0wlcarousel)***********************************/
@@ -215,88 +227,82 @@ function initSlider5(){
     }
 }
 
+/* 
 
-/*******************Signup Validation****************/
-function signupValidation() {
-	var valid = true;
+	Init Quantity
 
-	$("#username").removeClass("error-field");
-	$("#email").removeClass("error-field");
-	$("#password").removeClass("error-field");
-	$("#confirm-password").removeClass("error-field");
+	*/
 
-	var UserName = $("#username").val();
-	var email = $("#email").val();
-	var Password = $('#signup-password').val();
-    var ConfirmPassword = $('#confirm-password').val();
-	var emailRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+	function initQuantity()
+	{
+		// Handle product quantity input
+		if($('.product_quantity').length)
+		{
+			var input = $('#quantity_input');
+			var incButton = $('#quantity_inc_button');
+			var decButton = $('#quantity_dec_button');
 
-	$("#username-info").html("").hide();
-	$("#email-info").html("").hide();
+			var originalVal;
+			var endVal;
 
-	if (UserName.trim() == "") {
-		$("#username-info").html("required.").css("color", "#ee0000").show();
-		$("#username").addClass("error-field");
-		valid = false;
+			incButton.on('click', function()
+			{
+				originalVal = input.val();
+				endVal = parseFloat(originalVal) + 1;
+				input.val(endVal);
+			});
+
+			decButton.on('click', function()
+			{
+				originalVal = input.val();
+				if(originalVal > 1)
+				{
+					endVal = parseFloat(originalVal) - 1;
+					input.val(endVal);
+				}
+			});
+		}
 	}
-	if (email == "") {
-		$("#email-info").html("required").css("color", "#ee0000").show();
-		$("#email").addClass("error-field");
-		valid = false;
-	} else if (email.trim() == "") {
-		$("#email-info").html("Invalid email address.").css("color", "#ee0000").show();
-		$("#email").addClass("error-field");
-		valid = false;
-	} else if (!emailRegex.test(email)) {
-		$("#email-info").html("Invalid email address.").css("color", "#ee0000")
-				.show();
-		$("#email").addClass("error-field");
-		valid = false;
-	}
-	if (Password.trim() == "") {
-		$("#signup-password-info").html("required.").css("color", "#ee0000").show();
-		$("#signup-password").addClass("error-field");
-		valid = false;
-	}
-	if (ConfirmPassword.trim() == "") {
-		$("#confirm-password-info").html("required.").css("color", "#ee0000").show();
-		$("#confirm-password").addClass("error-field");
-		valid = false;
-	}
-	if(Password != ConfirmPassword){
-        $("#error-msg").html("Both passwords must be same.").show();
-        valid=false;
-    }
-	if (valid == false) {
-		$('.error-field').first().focus();
-		valid = false;
-	}
-	return valid;
-}
+});
 
-function loginValidation() {
-    var valid = true;
-    $("#username").removeClass("error-field");
-    $("#password").removeClass("error-field");
+$(function(){
+    getCart();
 
-    var UserName = $("#username").val();
-    var Password = $('#login-password').val();
+    $('#productForm').submit(function(e){
+        e.preventDefault();
+        var product = $(this).serialize();
+        console.log('clicked');
+        $.ajax({
+            type: 'POST',
+            url: 'cart_add.php',
+            data: product,
+            dataType: 'json',
+            success: function(response){
+                $('#callout').show();
+                $('.message').html(response.message);
+                if(response.error){
+                    $('#callout').removeClass('callout-success').addClass('callout-danger');
+                }
+                else{
+                  $('#callout').removeClass('callout-danger').addClass('callout-success');
+                  getCart();
+                }
+            }
+        });
+    });
+    $(document).on('click', '.close', function(){
+        $('#callout').hide();
+    });
 
-    $("#username-info").html("").hide();
+});
 
-    if (UserName.trim() == "") {
-        $("#username-info").html("required.").css("color", "#ee0000").show();
-        $("#username").addClass("error-field");
-        valid = false;
-    }
-    if (Password.trim() == "") {
-        $("#login-password-info").html("required.").css("color", "#ee0000").show();
-        $("#login-password").addClass("error-field");
-        valid = false;
-    }
-    if (valid == false) {
-        $('.error-field').first().focus();
-        valid = false;
-    }
-    return valid;
+function getCart(){
+	$.ajax({
+		type: 'POST',
+		url: 'cart_fetch.php',
+		dataType: 'json',
+		success: function(response){
+			$('.cart_count').html(response.count);
+		}
+	});
 }

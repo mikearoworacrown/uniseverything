@@ -55,11 +55,11 @@
 </footer>
 
 
-<script src="<?php echo url_for('/js/jquery.slim.min.js')?>"></script>
+<script src="<?php echo url_for('/js/jquery-3.6.0.js')?>"></script>
 <script src="<?php echo url_for('/js/popper.min.js')?>"></script>
 <script src="<?php echo url_for('/js/bootstrap.min.js')?>"></script>
 <script src="<?php echo url_for('/js/isotope.pkgd.min.js')?>"></script>
 <script src="<?php echo url_for('/js/OwlCarousel2-2.2.1/owl.carousel.js')?>"></script>
-<script src="<?php echo url_for('/js/custom.js?version=1')?>"></script>
+<script src="<?php echo url_for('/js/custom.js?version=8')?>"></script>
 </body>
 </html>

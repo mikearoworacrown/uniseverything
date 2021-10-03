@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/bootstrap.css'); ?>" />
-    <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/public.css?version=9'); ?>" />
-    <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/public_responsive.css?version=6'); ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/public.css?version=8'); ?>" />
+    <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/css/public_responsive.css?version=5'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/fontawesome/css/all.css'); ?>" />
     <link rel="stylesheet" type="text/css" href="<?php echo url_for('/stylesheets/OwlCarousel/owl.carousel.css'); ?>" />
     <title>Uniseverything <?php if(isset($page_title)) { echo '- ' . h($page_title); } ?></title>
@@ -19,8 +19,8 @@
 <header id="header">
 <nav class="navbar navbar-dark navbar-expand-lg header-nav" style="background-color: #fff">
   <div class="container-fluid">
-    <div class="navbar-brand logo-container">
-        <a href="<?php echo url_for('/'); ?>" class="navbar-brand logo"><img src="images/logo/unis_logo.png" width="47px" height="35px" alt="Uniseverything"></a>
+    <div class="navbar-brand brand-logo-container">
+        <a href="<?php echo url_for('/'); ?>" class="navbar-brand brand-logo"><img src="images/logo/unis_logo.png" width="47px" height="35px" alt="Uniseverything"></a>
     </div>
     
     <button class="navbar-toggler" type="button"
@@ -61,7 +61,7 @@
           
         </div>
       </div><!-- navbar-nav -->
-      <form class="form-inline mx-auto navbar-form">
+      <form class="form-inline mx-auto navbar-form" action="#">
           <input class="form-control search-input" type="text" placeholder="Search for product.." style="border: 2px solid #cf2d42;">
           <button class="btn" type="submit" style="background-color:  #cf2d42; color:#010101;"><i class="fas fa-search"></i></button>
       </form>
@@ -106,7 +106,7 @@
                   </div>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link navbar-link" href="#"><i class="fas fa-shopping-cart" style="font-size:24px"></i><span class="badge" style="background-color: #cf2d42; color: #0e0e0e; !important; position:relative; top:-14px;">0</span></a>
+                  <a class="nav-link navbar-link" href="'. url_for('cart_view.php') .'"><i class="fas fa-shopping-cart" style="font-size:24px"></i><span class="badge cart_count" style="background-color: #cf2d42; color: #0e0e0e; !important; position:relative; top:-14px;">0</span></a>
                 </li>
               </ul>
           ';

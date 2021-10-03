@@ -89,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `category_id` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
-  `slug` varchar(200) NOT NULL,
+  `product_slug` varchar(200) NOT NULL,
   `price` double NOT NULL,
   `photo` varchar(200) NOT NULL,
   `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -181,3 +181,17 @@ INSERT INTO `slides` (`name`, `photo`) VALUES
 ('slide3', 'slide3.png'),
 ('slide4', 'slide4.png'),
 ('slide5', 'slide5.png');
+
+
+--
+-- Table structure for table `cart`
+--
+
+CREATE TABLE IF NOT EXISTS `cart` (
+`id` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  `user_id` int(11) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `quantity` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
